@@ -10,7 +10,6 @@ module.exports = function(eleventyConfig) {
         baseURL: "/notes/",
         makeAllLinksAbsolute: true,
         uriSuffix: "/",
-        linkPattern: /\[\[([\w\s/-]+)(.\w+)?(\|([\w\s/]+))?\]\]/,
         postProcessPageName: (pageName) => {
             return pageName.trim().toLowerCase();
         }
