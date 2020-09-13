@@ -5,10 +5,10 @@ module.exports = {
     layout: "note.html",
     type: "note",
     eleventyComputed: {
-        title: data => titleCase(data.page.fileSlug),
+        title: data => titleCase(data.title || data.page.fileSlug),
         backlinks: (data) => {
             const notes = data.collections.notes;
-            const currentFileSlug = data.page.fileSlug;
+            const currentFileUrl = data.page.url;
 
             const stripYaml = (content) => {
                 if(content.startsWith("---")) {
@@ -29,12 +29,10 @@ module.exports = {
                 ) || [])
                 .map(m => (
                     // Extract link location
-                    m.slice(2,-2).split("|")[0]
-                        .toLowerCase()
-                        .replace(/[^\w\s-]+/g,'')
+                    "/notes/" + m.slice(2,-2).split("|")[0] + "/"
                 ));
 
-                return linksInNote.includes(currentFileSlug);
+                return linksInNote.includes(currentFileUrl);
             }).map(n => {
                 // Construct return object
                 const noteContent = stripYaml(n.template.inputContent);
